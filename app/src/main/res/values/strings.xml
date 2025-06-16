@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Marcha Project</string>
+    <string name="button_sign_up">Entrar</string>
+    <string name="button_register">Criar conta</string>
+    <string name="hint_email">Digite seu email</string>
+    <string name="hint_senha">Digite sua senha</string>
+    <string name="login_error">Email e/ou senha inválidos</string>
+    <string name="button_sign_out">Sair</string>
+</resources>

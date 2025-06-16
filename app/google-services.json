@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "105814269676",
+    "project_id": "marcha-project",
+    "storage_bucket": "marcha-project.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:105814269676:android:7f3b5ff1330a8bb9b70fc9",
+        "android_client_info": {
+          "package_name": "com.project.marcha"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCSgf3lCivL5_76W8hY1A-koUYppt04CKQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
