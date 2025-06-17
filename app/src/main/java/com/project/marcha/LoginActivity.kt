@@ -27,6 +27,9 @@ class LoginActivity : AppCompatActivity() {
             login()
         }
 
+        binding.buttonRegister.setOnClickListener {
+            getRegisterActivity()
+        }
     }
 
     private fun login(){
@@ -58,6 +61,11 @@ class LoginActivity : AppCompatActivity() {
             startActivity(Intent(this, HomeActivity::class.java))
             finish()
         }
+    }
+
+    private fun getRegisterActivity(){
+        startActivity(Intent(this,RegisterActivity::class.java))
+        finish()
     }
 
 }

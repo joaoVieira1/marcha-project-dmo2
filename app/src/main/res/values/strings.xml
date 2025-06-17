@@ -6,4 +6,9 @@
     <string name="hint_senha">Digite sua senha</string>
     <string name="login_error">Email e/ou senha inválidos</string>
     <string name="button_sign_out">Sair</string>
+    <string name="confirm_password">Confirme sua senha</string>
+    <string name="register_error">Insira corretamente os dados</string>
+    <string name="hint_name">Digite seu nome</string>
+    <string name="hint_height">Digite sua altura em centímetros</string>
+    <string name="hint_weight">digite seu peso em quilos</string>
 </resources>
