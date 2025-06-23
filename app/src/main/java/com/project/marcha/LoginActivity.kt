@@ -19,6 +19,7 @@ class LoginActivity : AppCompatActivity() {
 
         configListeners()
         keepLogin()
+        uxConfigs()
 
     }
 
@@ -30,6 +31,11 @@ class LoginActivity : AppCompatActivity() {
         binding.buttonRegister.setOnClickListener {
             getRegisterActivity()
         }
+    }
+
+    private fun uxConfigs(){
+        binding.buttonSignUp.backgroundTintList = null
+        binding.buttonRegister.backgroundTintList = null
     }
 
     private fun login(){
