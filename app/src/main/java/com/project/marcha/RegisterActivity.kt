@@ -18,12 +18,17 @@ class RegisterActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         configListeners()
+        uxConfigs()
     }
 
     private fun configListeners(){
         binding.buttonRegister.setOnClickListener {
             createUser()
         }
+    }
+
+    private fun uxConfigs(){
+        binding.buttonRegister.backgroundTintList = null
     }
 
     private fun createUser(){
