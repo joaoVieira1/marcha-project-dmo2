@@ -21,12 +21,17 @@ class ProfileActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         configListeners()
+        uxConfigs()
     }
 
     private fun configListeners(){
         binding.buttonRegister.setOnClickListener {
             persistenceDatabase()
         }
+    }
+
+    private fun uxConfigs(){
+        binding.buttonRegister.backgroundTintList = null
     }
 
     private fun persistenceDatabase(){

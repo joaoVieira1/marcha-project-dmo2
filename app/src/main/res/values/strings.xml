@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Marcha Project</string>
     <string name="button_sign_up">Entrar</string>
-    <string name="button_register">Criar conta</string>
+    <string name="button_register">Registre-se</string>
     <string name="hint_email">Digite seu email</string>
     <string name="hint_senha">Digite sua senha</string>
     <string name="login_error">Email e/ou senha inválidos</string>
@@ -11,4 +11,6 @@
     <string name="hint_name">Digite seu nome</string>
     <string name="hint_height">Digite sua altura em centímetros</string>
     <string name="hint_weight">digite seu peso em quilos</string>
+    <string name="button_save_datas">Salvar dados</string>
+    <string name="button_create_count">Criar conta</string>
 </resources>
