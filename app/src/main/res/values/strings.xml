@@ -13,4 +13,6 @@
     <string name="hint_weight">digite seu peso em quilos</string>
     <string name="button_save_datas">Salvar dados</string>
     <string name="button_create_count">Criar conta</string>
+    <string name="sensor_error">Sensor de passos não disponível!</string>
+    <string name="button_start">Iniciar</string>
 </resources>
