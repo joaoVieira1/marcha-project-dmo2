@@ -17,12 +17,16 @@ import com.project.marcha.helpers.StepCounterHelper
 import com.project.marcha.services.StepCounterService
 import android.Manifest
 import android.os.Build
+import android.util.Log
+import com.project.marcha.helpers.GpsHeightHelper
 
-class HomeActivity : AppCompatActivity(), StepCounterHelper.Callback {
+class HomeActivity : AppCompatActivity(), StepCounterHelper.Callback, GpsHeightHelper.Callback {
 
     private lateinit var binding: ActivityHomeBinding
     private lateinit var stepCounter: StepCounterHelper
+    private lateinit var heightHelper: GpsHeightHelper
     private var counting = false
+    private var maxHeight: Float = Float.MIN_VALUE
     val firebaseAuth = FirebaseAuth.getInstance()
 
     private val stepReceiver = object : BroadcastReceiver() {
@@ -42,6 +46,7 @@ class HomeActivity : AppCompatActivity(), StepCounterHelper.Callback {
         checkPermissions()
 
         stepCounter = StepCounterHelper(this, this)
+        heightHelper = GpsHeightHelper(this, this)
 
         if (!stepCounter.hasSensor()) {
             Toast.makeText(this, getString(R.string.sensor_error), Toast.LENGTH_LONG).show()
@@ -87,12 +92,17 @@ class HomeActivity : AppCompatActivity(), StepCounterHelper.Callback {
     private fun startCounter(){
         counting = !counting
         if (counting) {
+            maxHeight = Float.MIN_VALUE
+            binding.textViewMaxHeight.text = "Altitude Máxima: 0.00 m"
+            binding.textViewHeight.text = "Altitude: 0.00 m"
             val intent = Intent(this, StepCounterService::class.java)
             ContextCompat.startForegroundService(this, intent)
+            heightHelper.start()
             binding.buttonStart.text = "PARAR"
         } else {
             val intent = Intent(this, StepCounterService::class.java)
             stopService(intent)
+            heightHelper.stop()
             binding.buttonStart.text = "INICIAR"
         }
     }
@@ -127,6 +137,16 @@ class HomeActivity : AppCompatActivity(), StepCounterHelper.Callback {
                 Toast.makeText(this, "Permissões negadas. O app pode não funcionar corretamente.", Toast.LENGTH_LONG).show()
             } else {
                 Toast.makeText(this, "Permissões concedidas!", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
+    override fun onHeightUpdate(height: Float) {
+        runOnUiThread {
+            binding.textViewHeight.text = "Altitude: %.2f m".format(height)
+            if (height > maxHeight) {
+                maxHeight = height
+                binding.textViewMaxHeight.text = "Altitude Máxima: %.2f m".format(maxHeight)
             }
         }
     }
