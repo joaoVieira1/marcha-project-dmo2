@@ -19,6 +19,7 @@ import android.Manifest
 import android.os.Build
 import android.util.Log
 import com.project.marcha.helpers.GpsHeightHelper
+import com.project.marcha.services.TimerService
 
 class HomeActivity : AppCompatActivity(), StepCounterHelper.Callback, GpsHeightHelper.Callback {
 
@@ -38,22 +39,26 @@ class HomeActivity : AppCompatActivity(), StepCounterHelper.Callback, GpsHeightH
         }
     }
 
+    private val timerReceiver = object : BroadcastReceiver() {
+        override fun onReceive(context: Context?, intent: Intent?) {
+            val elapsed = intent?.getLongExtra(TimerService.EXTRA_ELAPSED_TIME, 0L) ?: 0L
+            binding.textViewTimer.text = formatElapsedTime(elapsed)
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityHomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         checkPermissions()
+        uxConfigs()
+        configListeners()
 
         stepCounter = StepCounterHelper(this, this)
         heightHelper = GpsHeightHelper(this, this)
 
-        if (!stepCounter.hasSensor()) {
-            Toast.makeText(this, getString(R.string.sensor_error), Toast.LENGTH_LONG).show()
-            binding.buttonStart.isEnabled = false
-        }
 
-        configListeners()
     }
 
     private fun configListeners(){
@@ -78,31 +83,47 @@ class HomeActivity : AppCompatActivity(), StepCounterHelper.Callback, GpsHeightH
 
     override fun onResume() {
         super.onResume()
-        LocalBroadcastManager.getInstance(this).registerReceiver(
-            stepReceiver,
-            IntentFilter(StepCounterService.ACTION_UPDATE_STEP_COUNT)
-        )
+        val lbm = LocalBroadcastManager.getInstance(this)
+        lbm.registerReceiver(stepReceiver, IntentFilter(StepCounterService.ACTION_UPDATE_STEP_COUNT))
+        lbm.registerReceiver(timerReceiver, IntentFilter(TimerService.ACTION_TIMER_UPDATE))
+
     }
 
     override fun onPause() {
         super.onPause()
-        LocalBroadcastManager.getInstance(this).unregisterReceiver(stepReceiver)
+        val lbm = LocalBroadcastManager.getInstance(this)
+        lbm.unregisterReceiver(stepReceiver)
+        lbm.unregisterReceiver(timerReceiver)
     }
 
     private fun startCounter(){
         counting = !counting
         if (counting) {
             maxHeight = Float.MIN_VALUE
+
             binding.textViewMaxHeight.text = "Altitude Máxima: 0.00 m"
             binding.textViewHeight.text = "Altitude: 0.00 m"
-            val intent = Intent(this, StepCounterService::class.java)
-            ContextCompat.startForegroundService(this, intent)
+
+            val stepIntent = Intent(this, StepCounterService::class.java)
+            ContextCompat.startForegroundService(this, stepIntent)
+
+            val timerIntent = Intent(this, TimerService::class.java)
+            ContextCompat.startForegroundService(this, timerIntent)
+
             heightHelper.start()
+
+            binding.walkerImage.setImageResource(R.drawable.homem_andando)
             binding.buttonStart.text = "PARAR"
         } else {
-            val intent = Intent(this, StepCounterService::class.java)
-            stopService(intent)
+            val stepIntent = Intent(this, StepCounterService::class.java)
+            stopService(stepIntent)
+
+            val timerIntent = Intent(this, TimerService::class.java)
+            stopService(timerIntent)
+
             heightHelper.stop()
+
+            binding.walkerImage.setImageResource(R.drawable.homem_parado)
             binding.buttonStart.text = "INICIAR"
         }
     }
@@ -151,5 +172,16 @@ class HomeActivity : AppCompatActivity(), StepCounterHelper.Callback, GpsHeightH
         }
     }
 
+    private fun uxConfigs(){
+        binding.buttonStart.backgroundTintList = null
+        binding.buttonSignOut.backgroundTintList = null
+    }
 
+    private fun formatElapsedTime(millis: Long): String {
+        val seconds = millis / 1000
+        val hours = seconds / 3600
+        val minutes = (seconds % 3600) / 60
+        val secs = seconds % 60
+        return String.format("%02d:%02d:%02d", hours, minutes, secs)
+    }
 }
