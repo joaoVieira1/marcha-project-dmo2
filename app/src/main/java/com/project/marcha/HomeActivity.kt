@@ -18,23 +18,36 @@ import com.project.marcha.services.StepCounterService
 import android.Manifest
 import android.os.Build
 import android.util.Log
+import com.google.firebase.firestore.FirebaseFirestore
 import com.project.marcha.helpers.GpsHeightHelper
 import com.project.marcha.services.TimerService
 
 class HomeActivity : AppCompatActivity(), StepCounterHelper.Callback, GpsHeightHelper.Callback {
 
     private lateinit var binding: ActivityHomeBinding
+
     private lateinit var stepCounter: StepCounterHelper
     private lateinit var heightHelper: GpsHeightHelper
+
     private var counting = false
     private var maxHeight: Float = Float.MIN_VALUE
+
+    private var heightUser: Int = 0
+    private var sexUser: String = ""
+    private var nameUser: String = ""
+    private var weightUser: Float = 0f
+
     val firebaseAuth = FirebaseAuth.getInstance()
 
     private val stepReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context?, intent: Intent?) {
             if (intent?.action == StepCounterService.ACTION_UPDATE_STEP_COUNT) {
-                val passos = intent.getIntExtra(StepCounterService.EXTRA_STEP_COUNT, 0)
-                binding.textViewCounter.text = "Passos = $passos"
+                val steps = intent.getIntExtra(StepCounterService.EXTRA_STEP_COUNT, 0)
+                binding.textViewCounter.text = "Passos = $steps"
+
+                val stepLenght = estimateStrideLength(heightUser, sexUser)
+                val distance = steps * stepLenght
+                binding.textViewDistance.text = "Distância: %.2f m".format(distance)
             }
         }
     }
@@ -51,14 +64,19 @@ class HomeActivity : AppCompatActivity(), StepCounterHelper.Callback, GpsHeightH
         binding = ActivityHomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        val userEmail = firebaseAuth.currentUser?.email?.trim()
+
         checkPermissions()
-        uxConfigs()
         configListeners()
+        if(userEmail != null){
+            fetchUserData(userEmail)
+        }
+        uxConfigs()
+
+        
 
         stepCounter = StepCounterHelper(this, this)
         heightHelper = GpsHeightHelper(this, this)
-
-
     }
 
     private fun configListeners(){
@@ -112,7 +130,14 @@ class HomeActivity : AppCompatActivity(), StepCounterHelper.Callback, GpsHeightH
 
             heightHelper.start()
 
-            binding.walkerImage.setImageResource(R.drawable.homem_andando)
+            if(sexUser.equals("Masculino")){
+                binding.walkerImage.setImageResource(R.drawable.homem_andando)
+            }
+
+            if(sexUser.equals("Feminino")){
+                binding.walkerImage.setImageResource(R.drawable.mulher_andando)
+            }
+
             binding.buttonStart.text = "PARAR"
         } else {
             val stepIntent = Intent(this, StepCounterService::class.java)
@@ -123,7 +148,14 @@ class HomeActivity : AppCompatActivity(), StepCounterHelper.Callback, GpsHeightH
 
             heightHelper.stop()
 
-            binding.walkerImage.setImageResource(R.drawable.homem_parado)
+            if(sexUser.equals("Masculino")){
+                binding.walkerImage.setImageResource(R.drawable.homem_parado)
+            }
+
+            if(sexUser.equals("Feminino")){
+                binding.walkerImage.setImageResource(R.drawable.mulher_parada)
+            }
+
             binding.buttonStart.text = "INICIAR"
         }
     }
@@ -183,5 +215,33 @@ class HomeActivity : AppCompatActivity(), StepCounterHelper.Callback, GpsHeightH
         val minutes = (seconds % 3600) / 60
         val secs = seconds % 60
         return String.format("%02d:%02d:%02d", hours, minutes, secs)
+    }
+
+    fun fetchUserData(email: String) {
+        val db = FirebaseFirestore.getInstance()
+        db.collection("users")
+            .document(email)  // supondo que o e-mail seja usado como ID do documento
+            .get()
+            .addOnSuccessListener { document ->
+                if (document != null && document.exists()) {
+                    heightUser = document.getLong("height")?.toInt() ?: 0
+                    sexUser = document.getString("sex") ?: ""
+                    weightUser = document.getLong("weight")?.toFloat() ?: 0f
+                    nameUser = document.getString("name") ?: ""
+                } else {
+                    Log.w("HomeActivity", "Documento do usuário não encontrado")
+                }
+            }
+            .addOnFailureListener { e ->
+                Log.e("HomeActivity", "Erro ao buscar dados do usuário", e)
+            }
+    }
+
+    fun estimateStrideLength(alturaCm: Int, sexo: String): Float {
+        return when (sexo.lowercase()) {
+            "masculino" -> alturaCm * 0.415f / 100f
+            "feminino" -> alturaCm * 0.413f / 100f
+            else -> alturaCm * 0.414f / 100f
+        }
     }
 }

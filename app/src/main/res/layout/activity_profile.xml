@@ -27,7 +27,7 @@
         android:paddingHorizontal="16dp"
         android:textColorHint="#DDDDDD"
         android:textColor="#FFFFFF"
-        android:inputType="textPassword"
+        android:inputType="text"
         android:layout_marginHorizontal="32dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
