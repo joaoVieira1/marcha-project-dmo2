@@ -18,6 +18,7 @@ import com.project.marcha.services.StepCounterService
 import android.Manifest
 import android.os.Build
 import android.util.Log
+import android.view.View
 import com.google.firebase.firestore.FirebaseFirestore
 import com.project.marcha.helpers.GpsHeightHelper
 import com.project.marcha.services.TimerService
@@ -43,11 +44,11 @@ class HomeActivity : AppCompatActivity(), StepCounterHelper.Callback, GpsHeightH
         override fun onReceive(context: Context?, intent: Intent?) {
             if (intent?.action == StepCounterService.ACTION_UPDATE_STEP_COUNT) {
                 val steps = intent.getIntExtra(StepCounterService.EXTRA_STEP_COUNT, 0)
-                binding.textViewCounter.text = "Passos = $steps"
+                binding.textViewCounter.text = "PASSOS: $steps"
 
                 val stepLenght = estimateStrideLength(heightUser, sexUser)
                 val distance = steps * stepLenght
-                binding.textViewDistance.text = "Distância: %.2f m".format(distance)
+                binding.textViewDistance.text = "DISTÂNCIA: %.2f m".format(distance)
             }
         }
     }
@@ -73,7 +74,7 @@ class HomeActivity : AppCompatActivity(), StepCounterHelper.Callback, GpsHeightH
         }
         uxConfigs()
 
-        
+        binding.walkerImage.setImageResource(R.drawable.homem_parado)
 
         stepCounter = StepCounterHelper(this, this)
         heightHelper = GpsHeightHelper(this, this)
@@ -96,7 +97,7 @@ class HomeActivity : AppCompatActivity(), StepCounterHelper.Callback, GpsHeightH
     }
 
     override fun onStepsDetected(passos: Int) {
-        binding.textViewCounter.text = "Passos = $passos"
+        binding.textViewCounter.text = "PASSOS: $passos"
     }
 
     override fun onResume() {
@@ -119,8 +120,8 @@ class HomeActivity : AppCompatActivity(), StepCounterHelper.Callback, GpsHeightH
         if (counting) {
             maxHeight = Float.MIN_VALUE
 
-            binding.textViewMaxHeight.text = "Altitude Máxima: 0.00 m"
-            binding.textViewHeight.text = "Altitude: 0.00 m"
+            binding.textViewMaxHeight.text = "ALTITUDE MÁXIMA: 0.00 m"
+            binding.textViewHeight.text = "ALTITUDE: 0.00 m"
 
             val stepIntent = Intent(this, StepCounterService::class.java)
             ContextCompat.startForegroundService(this, stepIntent)
@@ -137,6 +138,8 @@ class HomeActivity : AppCompatActivity(), StepCounterHelper.Callback, GpsHeightH
             if(sexUser.equals("Feminino")){
                 binding.walkerImage.setImageResource(R.drawable.mulher_andando)
             }
+
+            binding.textViewLetsStart.visibility = View.GONE
 
             binding.buttonStart.text = "PARAR"
         } else {
@@ -196,10 +199,10 @@ class HomeActivity : AppCompatActivity(), StepCounterHelper.Callback, GpsHeightH
 
     override fun onHeightUpdate(height: Float) {
         runOnUiThread {
-            binding.textViewHeight.text = "Altitude: %.2f m".format(height)
+            binding.textViewHeight.text = "ALTITUDE: %.2f m".format(height)
             if (height > maxHeight) {
                 maxHeight = height
-                binding.textViewMaxHeight.text = "Altitude Máxima: %.2f m".format(maxHeight)
+                binding.textViewMaxHeight.text = "ALTITUDE MÁXIMA: %.2f m".format(maxHeight)
             }
         }
     }
