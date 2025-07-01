@@ -41,6 +41,12 @@
 ## 📷 Capturas de Tela 
 
 ![imagem1](https://github.com/joaoVieira1/marcha-project-dmo2/blob/main/pictures/1.jpeg)
+![imagem2](https://github.com/joaoVieira1/marcha-project-dmo2/blob/main/pictures/2.jpeg)
+![imagem3](https://github.com/joaoVieira1/marcha-project-dmo2/blob/main/pictures/3.jpeg)
+![imagem4](https://github.com/joaoVieira1/marcha-project-dmo2/blob/main/pictures/4.jpeg)
+![imagem5](https://github.com/joaoVieira1/marcha-project-dmo2/blob/main/pictures/5.jpeg)
+![imagem6](https://github.com/joaoVieira1/marcha-project-dmo2/blob/main/pictures/6.jpeg)
+![imagem7](https://github.com/joaoVieira1/marcha-project-dmo2/blob/main/pictures/7.jpeg)
 
 ---
 
