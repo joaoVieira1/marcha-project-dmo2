@@ -86,7 +86,8 @@ class StatisticsActivity : AppCompatActivity() {
             .add(trail)
             .addOnSuccessListener {
                 Toast.makeText(this, "Trilha salva com sucesso!", Toast.LENGTH_SHORT).show()
-                finish()
+                val intent = Intent(this, HomeActivity::class.java)
+                startActivity(intent)
             }
             .addOnFailureListener {
                 Toast.makeText(this, "Erro ao salvar trilha", Toast.LENGTH_SHORT).show()

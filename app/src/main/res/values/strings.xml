@@ -21,5 +21,7 @@
     <string name="button_save">Salvar</string>
     <string name="button_discard">Descartar</string>
     <string name="hint_name_trail">Dê um nome a essa trilha</string>
+    <string name="button_trails">Trilhas</string>
+    <string name="button_back">Voltar</string>
 
 </resources>

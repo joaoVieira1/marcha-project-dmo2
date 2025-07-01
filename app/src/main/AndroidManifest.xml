@@ -33,6 +33,7 @@
         <activity android:name=".RegisterActivity"/>
         <activity android:name=".ProfileActivity"/>
         <activity android:name=".StatisticsActivity"/>
+        <activity android:name=".TrailsActivity"/>
         <service
             android:name=".services.StepCounterService"
             android:exported="false"

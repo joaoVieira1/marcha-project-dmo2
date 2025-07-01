@@ -96,6 +96,11 @@ class HomeActivity : AppCompatActivity(), StepCounterHelper.Callback, GpsHeightH
         binding.buttonStart.setOnClickListener {
             startCounter()
         }
+
+        binding.buttonTrails.setOnClickListener {
+            val intent = Intent(this, TrailsActivity::class.java)
+            startActivity(intent)
+        }
     }
 
     private fun signOut(){
@@ -228,6 +233,7 @@ class HomeActivity : AppCompatActivity(), StepCounterHelper.Callback, GpsHeightH
     private fun uxConfigs(){
         binding.buttonStart.backgroundTintList = null
         binding.buttonSignOut.backgroundTintList = null
+        binding.buttonTrails.backgroundTintList = null
     }
 
     private fun formatElapsedTime(millis: Long): String {
