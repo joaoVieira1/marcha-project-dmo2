@@ -15,4 +15,11 @@
     <string name="button_create_count">Criar conta</string>
     <string name="sensor_error">Sensor de passos não disponível!</string>
     <string name="button_start">Iniciar</string>
+    <string name="button_stop">Parar</string>
+    <string name="congratulations">Parabéns!</string>
+    <string name="congratulations_2">Você concluiu sua trilha!</string>
+    <string name="button_save">Salvar</string>
+    <string name="button_discard">Descartar</string>
+    <string name="hint_name_trail">Dê um nome a essa trilha</string>
+
 </resources>

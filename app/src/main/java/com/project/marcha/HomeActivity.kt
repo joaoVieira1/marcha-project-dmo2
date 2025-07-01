@@ -32,6 +32,9 @@ class HomeActivity : AppCompatActivity(), StepCounterHelper.Callback, GpsHeightH
 
     private var counting = false
     private var maxHeight: Float = Float.MIN_VALUE
+    private var finalSteps: Int = 0
+    private var finalDistance: Float = 0f
+    private var finalTime: String = "00:00:00"
 
     private var heightUser: Int = 0
     private var sexUser: String = ""
@@ -49,6 +52,9 @@ class HomeActivity : AppCompatActivity(), StepCounterHelper.Callback, GpsHeightH
                 val stepLenght = estimateStrideLength(heightUser, sexUser)
                 val distance = steps * stepLenght
                 binding.textViewDistance.text = "DISTÂNCIA: %.2f m".format(distance)
+
+                finalSteps = steps
+                finalDistance = steps * stepLenght
             }
         }
     }
@@ -57,6 +63,8 @@ class HomeActivity : AppCompatActivity(), StepCounterHelper.Callback, GpsHeightH
         override fun onReceive(context: Context?, intent: Intent?) {
             val elapsed = intent?.getLongExtra(TimerService.EXTRA_ELAPSED_TIME, 0L) ?: 0L
             binding.textViewTimer.text = formatElapsedTime(elapsed)
+
+            finalTime = formatElapsedTime(elapsed)
         }
     }
 
@@ -160,6 +168,16 @@ class HomeActivity : AppCompatActivity(), StepCounterHelper.Callback, GpsHeightH
             }
 
             binding.buttonStart.text = "INICIAR"
+
+            val intent = Intent(this, StatisticsActivity::class.java)
+
+            intent.putExtra("steps", finalSteps)
+            intent.putExtra("distance", finalDistance)
+            intent.putExtra("time", finalTime)
+            intent.putExtra("maxHeight", maxHeight)
+            intent.putExtra("nameUser", nameUser)
+
+            startActivity(intent)
         }
     }
 

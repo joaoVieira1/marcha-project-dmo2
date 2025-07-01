@@ -32,6 +32,7 @@
         <activity android:name=".HomeActivity"/>
         <activity android:name=".RegisterActivity"/>
         <activity android:name=".ProfileActivity"/>
+        <activity android:name=".StatisticsActivity"/>
         <service
             android:name=".services.StepCounterService"
             android:exported="false"

@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/pixel_montain_login">
+
+    <ImageView
+        android:id="@+id/logo_image"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:src="@drawable/logo"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <TextView
+        android:id="@+id/textView_congratulations"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/logo_image"
+        android:text="@string/congratulations"
+        android:textStyle="bold"
+        android:textColor="#222222"
+        android:textSize="40sp"
+        android:textAllCaps="true" />
+
+    <TextView
+        android:id="@+id/textView_congratulations_2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textView_congratulations"
+        android:text="@string/congratulations_2"
+        android:textStyle="bold"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        android:textAllCaps="true"
+        android:layout_marginTop="20dp"/>
+
+    <ImageView
+        android:id="@+id/star_image"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:src="@drawable/star"
+        app:layout_constraintTop_toBottomOf="@id/textView_congratulations_2"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <TextView
+        android:id="@+id/textView_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/star_image"
+        android:textStyle="bold"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        android:textAllCaps="true"
+        android:text="Teste: tararamra"/>
+
+    <TextView
+        android:id="@+id/textView_steps"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textView_time"
+        android:textStyle="bold"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        android:textAllCaps="true"
+        android:text="Teste: tararamra"
+        android:layout_marginTop="10dp"/>
+
+    <TextView
+        android:id="@+id/textView_distance"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textView_steps"
+        android:textStyle="bold"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        android:textAllCaps="true"
+        android:text="Teste: tararamra"
+        android:layout_marginTop="10dp"/>
+
+    <TextView
+        android:id="@+id/textView_max_height"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textView_distance"
+        android:textStyle="bold"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        android:textAllCaps="true"
+        android:text="Teste: tararamra"
+        android:layout_marginTop="10dp"/>
+
+    <EditText
+        android:id="@+id/editText_name_trail"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:hint="@string/hint_name_trail"
+        android:background="@drawable/edit_text_background"
+        android:paddingHorizontal="16dp"
+        android:textColorHint="#DDDDDD"
+        android:textColor="#FFFFFF"
+        android:inputType="text"
+        android:layout_marginHorizontal="32dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textView_max_height"
+        app:layout_constraintBottom_toTopOf="@id/button_discard"
+        android:layout_marginBottom="15dp"/>
+
+    <Button
+        android:id="@+id/button_save"
+        android:layout_width="170dp"
+        android:layout_height="50dp"
+        android:textColor="#FFFFFF"
+        android:background="@drawable/button_background"
+        app:layout_constraintStart_toEndOf="@id/button_discard"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:text="@string/button_save"
+        android:textAllCaps="true"
+        android:layout_marginBottom="30dp" />
+
+    <Button
+        android:id="@+id/button_discard"
+        android:layout_width="170dp"
+        android:layout_height="50dp"
+        android:textColor="#FFFFFF"
+        android:background="@drawable/button_background"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/button_save"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:text="@string/button_discard"
+        android:textAllCaps="true"
+        android:layout_marginBottom="30dp"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
