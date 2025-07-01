@@ -38,6 +38,12 @@
 
 ---
 
+## 📷 Capturas de Tela 
+
+![imagem1](https://github.com/joaoVieira1/marcha-project-dmo2/blob/main/pictures/1.jpeg)
+
+---
+
 ## 👨‍💻 Desenvolvedor
 
 **João Vieira**  
